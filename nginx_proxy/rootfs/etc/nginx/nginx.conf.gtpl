@@ -49,7 +49,11 @@ http {
         listen 443 ssl default_server;
         listen [::]:80 default_server;
         listen [::]:443 ssl default_server;
+        {{- if eq .options.http2 false }}
+        http2 off;
+        {{- else }}
         http2 on;
+        {{- end }}
         {{- if .variables.quic_port }}
         listen 443 quic reuseport default_server;
         listen [::]:443 quic reuseport default_server;
@@ -83,7 +87,11 @@ http {
         {{- if not .options.real_ip_from  }}
         listen 443 ssl;
         listen [::]:443 ssl;
+        {{- if eq .options.http2 false }}
+        http2 off;
+        {{- else }}
         http2 on;
+        {{- end }}
         {{- if .variables.quic_port }}
         listen 443 quic;
         listen [::]:443 quic;
@@ -92,7 +100,11 @@ http {
         {{- else }}
         listen 443 ssl proxy_protocol;
         listen [::]:443 ssl proxy_protocol;
+        {{- if eq .options.http2 false }}
+        http2 off;
+        {{- else }}
         http2 on;
+        {{- end }}
         {{- if .variables.quic_port }}
         listen 443 quic proxy_protocol;
         listen [::]:443 quic proxy_protocol;
